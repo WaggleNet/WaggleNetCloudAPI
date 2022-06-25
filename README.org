@@ -17,8 +17,8 @@ These parameters are supplied fed into the script at startup by Flask's dotenv i
 
 ** Functions
 This API has auth capabilities to register/login users, such that an access key can be obtained to either make a request to DynamoDB or to make an authenticated request to the DynamoDB functions of this API. The endpoints have been segregated below into Cognito and DynamoDB functions.
-*** Cognito
-**** User Registration
+** Cognito
+*** User Registration
 Self-explanatory.
 - Endpoint: src_src[:exports code]{/signup}.
 - Methods: POST
