@@ -1,3 +1,4 @@
 flask==2.1.2
 python-dotenv
 boto3
+pyjwt[cypto]

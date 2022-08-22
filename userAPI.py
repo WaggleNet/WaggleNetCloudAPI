@@ -16,12 +16,13 @@ def sign_up():
     # TODO - sanitize signup paramaters
     #   - check for valid email and password
     #   - Exception behavior
-    if request.json is None:
-        return "No JSON payload supplied", 400
+    if request.authorization is None or request.authorization.username \
+       is None or request.authorization.password is None:
+        return "Authorization header not supplied", 400
 
     return client.sign_up(ClientId=environ["COGNITO_CLIENT_ID"],
-                    Username=request.json["user"],
-                    Password=request.json["pass"])
+                    Username=request.authorization.username,
+                     Password=request.authorization.password)
 
 @app.route("/confirm", methods=['POST'])
 def confirm():
@@ -57,21 +58,19 @@ def resend():
 @app.route("/signIn", methods=["POST"])
 def signIn():
     # TODO - validate/sanitize username and password
-    if request.json is None:
-        return "No JSON load supplied", 400
-
-    if not ("user" in request.json.keys() and "pass" in request.json.keys()):
-        return "Required fields not supplied", 400
+    if request.authorization is None or request.authorization.username \
+       is None or request.authorization.password is None:
+        return "Authorization header not supplied", 400
 
     try:
         response =  client.initiate_auth(ClientId=environ["COGNITO_CLIENT_ID"],
                                 AuthFlow="USER_PASSWORD_AUTH",
-                                AuthParameters={"USERNAME": request.json["user"],
-                                                "PASSWORD": request.json["pass"]})
+                                AuthParameters={"USERNAME": request.authorization.username,
+                                                "PASSWORD": request.authorization.password})
 
         print(response.keys())
         return {k:response["AuthenticationResult"][k] for k in ("AccessToken", "IdToken")}
     except client.exceptions.NotAuthorizedException:
-        return "Incorrect username or password", 400
+        return "Incorrect username or password", 401
 
 app.run("0.0.0.0", 3000, load_dotenv=True)
