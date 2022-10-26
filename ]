@@ -10,9 +10,12 @@ from datetime import datetime
 from flask import (Flask, request)
 
 jwk =  loads(open("jwks.json", "r").read())
+app_client_id = '<app client id>'
 
 def jwtDecode(inp):
+    token = jwk['token']
     header = jwt.get_unverified_header(inp)
+    claims = jwt.get_unverified_claims(token)
     for i in jwk["keys"]:
         if header["kid"] == i["kid"]:
             pubkey = jwt.algorithms.RSAAlgorithm.from_jwk(i)
@@ -23,7 +26,7 @@ def jwtDecode(inp):
                                           "verify_exp": datetime.now()},
                                  iss=f"https://cognito-idp.{environ['AWS_REGION']}.amazonaws.com/{environ['COGNITO_POOL_ID']}")
                 return out if out["client_id"] in [environ["COGNITO_CLIENT_ID"]] and \
-                    out["token_use"]=="access" else None
+                    out["token_use"]=="access" and claims['aud'] == app_client_id else None
             except:
                 return None
     return None

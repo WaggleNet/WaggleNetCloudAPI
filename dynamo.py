@@ -15,6 +15,8 @@ dotenv.load_dotenv()
 jwk =  loads(open("jwks.json", "r").read())
 client = boto3.client("dynamodb", region_name=environ["AWS_REGION"])
 
+# question - use this file or the other file for jwt validation
+
 def jwtDecode(inp):
     try:
         header = jwt.get_unverified_header(inp)
