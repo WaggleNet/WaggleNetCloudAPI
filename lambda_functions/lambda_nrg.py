@@ -84,6 +84,5 @@ def lambda_handler(event, context):
     
     return {"error": False, 
             "success": True, 
-            "message": "Please confirm your signup, \
-                        check Email for validation code", 
+            "message": "Success", 
             "data": None}
