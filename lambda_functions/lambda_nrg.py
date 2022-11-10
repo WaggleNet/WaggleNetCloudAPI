@@ -8,9 +8,9 @@ import hashlib
 import base64
 import json
 
-USER_POOL_ID = ''
-CLIENT_ID = ''
-CLIENT_SECRET = ''
+USER_POOL_ID = 'us-east-1_ueCt5F16d'
+CLIENT_ID = '3t0c0n0l97ddvo44ea0bk38kfj'
+CLIENT_SECRET = '156cufejvvjlmfc28af2lmuv2dko4bruuibgdrm99shjipmgl5jn'
 
 def get_secret_hash(username):
     msg = username + CLIENT_ID

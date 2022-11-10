@@ -23,4 +23,4 @@ Self-explanatory.
 - Endpoint: src_src[:exports code]{/signup}.
 - Methods: POST
 - Argument format: Send username/password in Auth header.
-- Other notes: username must be an email. Password must have 8 chars minimum, >=1 uppercase letter, >=1 number, >=1 special symbol. A character can be consecutively repeated a maximum of 2 times.
+- Other notes: username must be an email. Password must have 8 chars minimum, >=1 uppercase letter, >=1 number.
